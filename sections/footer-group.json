@@ -215,10 +215,22 @@
         "padding-block-start": 20,
         "padding-block-end": 48
       }
+    },
+    "whatsapp_button": {
+      "type": "whatsapp-button",
+      "settings": {
+        "phone_number": "",
+        "default_message": "Hola, quiero más información sobre sus productos.",
+        "button_text": "Escríbenos",
+        "position": "right",
+        "background_color": "#25D366",
+        "icon_color": "#FFFFFF"
+      }
     }
   },
   "order": [
     "footer_m9NzUG",
-    "footer_utilities_jLGE8U"
+    "footer_utilities_jLGE8U",
+    "whatsapp_button"
   ]
 }

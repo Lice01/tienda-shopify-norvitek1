@@ -1,0 +1,161 @@
+{% doc %}
+  Renders a floating WhatsApp button that opens a chat with the store's
+  WhatsApp number, prefilled with a default message.
+{% enddoc %}
+
+{% liquid
+  assign phone_digits = section.settings.phone_number | strip | remove: '+' | remove: ' ' | remove: '-' | remove: '(' | remove: ')'
+  assign whatsapp_message = section.settings.default_message | url_encode
+%}
+
+{% if phone_digits != blank or request.design_mode %}
+  <a
+    href="https://wa.me/{{ phone_digits }}?text={{ whatsapp_message }}"
+    class="whatsapp-button whatsapp-button--{{ section.settings.position }}"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="{{ section.settings.button_text | default: 'Chatear por WhatsApp' }}"
+    {% if phone_digits == blank %}
+      aria-disabled="true"
+      onclick="return false;"
+    {% endif %}
+    {{ section.shopify_attributes }}
+  >
+    <svg
+      class="whatsapp-button__icon"
+      aria-hidden="true"
+      focusable="false"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 20 20"
+    >
+      {%- render 'icon', icon: 'whatsapp' -%}
+    </svg>
+    {% if section.settings.button_text != blank %}
+      <span class="whatsapp-button__label">{{ section.settings.button_text }}</span>
+    {% endif %}
+  </a>
+{% endif %}
+
+{% stylesheet %}
+  .whatsapp-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: var(--layer-overlay);
+    display: flex;
+    align-items: center;
+    height: 56px;
+    min-width: 56px;
+    padding-right: 16px;
+    border-radius: 999px;
+    background-color: {{ section.settings.background_color }};
+    color: {{ section.settings.icon_color }};
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .whatsapp-button--left {
+    right: auto;
+    left: 20px;
+  }
+
+  .whatsapp-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    color: {{ section.settings.icon_color }};
+  }
+
+  .whatsapp-button__icon {
+    flex-shrink: 0;
+    width: 56px;
+    height: 56px;
+    padding: 14px;
+  }
+
+  .whatsapp-button__label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .shopify-design-mode .whatsapp-button[aria-disabled='true'] {
+    opacity: 0.5;
+  }
+
+  @media screen and (max-width: 749px) {
+    .whatsapp-button {
+      bottom: 16px;
+      right: 16px;
+      width: 56px;
+      padding-right: 0;
+    }
+
+    .whatsapp-button--left {
+      left: 16px;
+    }
+
+    .whatsapp-button__label {
+      display: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Botón flotante de WhatsApp",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Muestra un botón flotante en todas las páginas que abre un chat de WhatsApp con tu número."
+    },
+    {
+      "type": "text",
+      "id": "phone_number",
+      "label": "Número de WhatsApp",
+      "info": "Incluye el código de país, sin espacios ni signos. Ejemplo: 573001234567",
+      "default": ""
+    },
+    {
+      "type": "textarea",
+      "id": "default_message",
+      "label": "Mensaje predeterminado",
+      "default": "Hola, quiero más información sobre sus productos."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Texto del botón (opcional)",
+      "default": "Escríbenos"
+    },
+    {
+      "type": "select",
+      "id": "position",
+      "label": "Posición en pantalla",
+      "options": [
+        {
+          "value": "right",
+          "label": "Derecha"
+        },
+        {
+          "value": "left",
+          "label": "Izquierda"
+        }
+      ],
+      "default": "right"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Color de fondo",
+      "default": "#25D366"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Color del ícono",
+      "default": "#FFFFFF"
+    }
+  ]
+}
+{% endschema %}
