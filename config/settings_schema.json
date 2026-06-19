@@ -57,6 +57,17 @@
     ]
   },
   {
+    "name": "Información de contacto",
+    "settings": [
+      {
+        "type": "text",
+        "id": "whatsapp_phone",
+        "label": "Número de WhatsApp",
+        "info": "Incluye el código de país, sin espacios ni signos. Ejemplo: 573001234567. Se usa en el botón flotante y en la página de producto."
+      }
+    ]
+  },
+  {
     "name": "t:names.colors",
     "settings": [
       {

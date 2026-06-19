@@ -5,6 +5,9 @@
 
 {% liquid
   assign phone_digits = section.settings.phone_number | strip | remove: '+' | remove: ' ' | remove: '-' | remove: '(' | remove: ')'
+  if phone_digits == blank
+    assign phone_digits = settings.whatsapp_phone | strip | remove: '+' | remove: ' ' | remove: '-' | remove: '(' | remove: ')'
+  endif
   assign whatsapp_message = section.settings.default_message | url_encode
 %}
 

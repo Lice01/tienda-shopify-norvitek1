@@ -66,6 +66,13 @@
             "padding-inline-end": 0
           },
           "blocks": {
+            "urgency_badge_nv": {
+              "type": "custom-liquid",
+              "settings": {
+                "custom_liquid": "{%- assign v = closest.product.selected_or_first_available_variant -%}{%- if v.compare_at_price > v.price -%}{%- assign disc = v.compare_at_price | minus: v.price | times: 100 | divided_by: v.compare_at_price -%}{%- endif -%}<div class=\"nv-urgency\"><div class=\"nv-badges\">{%- if disc -%}<span class=\"nv-badge nv-badge--discount\">-{{ disc }}% DE DESCUENTO</span>{%- endif -%}<span class=\"nv-badge nv-badge--exclusive\">⚡ OFERTA EXCLUSIVA</span></div><p class=\"nv-viewers\">👁 <span class=\"nv-count\">23</span> personas están viendo este producto</p></div><script>(function(){var c=document.querySelector('.nv-count');if(c)c.textContent=Math.floor(Math.random()*28)+7;})();</script><style>.nv-urgency{display:flex;flex-direction:column;gap:10px;margin-bottom:4px}.nv-badges{display:flex;flex-wrap:wrap;gap:8px}.nv-badge{display:inline-flex;align-items:center;font-size:.7rem;font-weight:700;padding:4px 12px;border-radius:100px;text-transform:uppercase;letter-spacing:.5px}.nv-badge--exclusive{background:#FF3B30;color:#fff}.nv-badge--discount{background:#FF9500;color:#fff}.nv-viewers{font-size:.875rem;font-weight:500;color:var(--color-foreground);margin:0}</style>"
+              },
+              "blocks": {}
+            },
             "group_icgrde": {
               "type": "group",
               "name": "Header",
@@ -140,7 +147,7 @@
                     "width": "100%",
                     "alignment": "left",
                     "font": "var(--font-body--family)",
-                    "font_size": "1rem",
+                    "font_size": "1.5rem",
                     "line_height": "normal",
                     "letter_spacing": "normal",
                     "case": "none",
@@ -217,6 +224,25 @@
               },
               "block_order": []
             },
+            "product_inventory_nv": {
+              "type": "product-inventory",
+              "settings": {
+                "inventory_threshold": 10,
+                "show_inventory_quantity": true,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "whatsapp_order_nv": {
+              "type": "custom-liquid",
+              "settings": {
+                "custom_liquid": "{%- assign wa = settings.whatsapp_phone | strip | remove: '+' | remove: ' ' | remove: '-' | remove: '(' | remove: ')' -%}{%- assign msg = 'Hola, quiero hacer un pedido de: ' | append: closest.product.title | url_encode -%}{%- if wa != blank -%}<a href=\"https://wa.me/{{ wa }}?text={{ msg }}\" class=\"nv-wa-btn\" target=\"_blank\" rel=\"noopener noreferrer\"><svg width=\"22\" height=\"22\" viewBox=\"0 0 20 20\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"currentColor\" aria-hidden=\"true\">{%- render 'icon', icon: 'whatsapp' -%}</svg> HAZ TU PEDIDO AQUÍ</a>{%- elsif request.design_mode -%}<div class=\"nv-wa-btn nv-wa-btn--preview\">Configure el número de WhatsApp en: Ajustes del tema → Información de contacto</div>{%- endif -%}<style>.nv-wa-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:14px 24px;background:#25D366;color:#fff;font-size:1rem;font-weight:700;border-radius:14px;text-decoration:none;transition:background .2s;box-sizing:border-box}.nv-wa-btn:hover{background:#1EBE59;color:#fff}.nv-wa-btn--preview{background:#e0e0e0;color:#555;cursor:not-allowed;font-size:.8rem;opacity:.8}</style>"
+              },
+              "blocks": {}
+            },
             "text_aEtTtq": {
               "type": "text",
               "name": "Product description",
@@ -245,10 +271,13 @@
             }
           },
           "block_order": [
+            "urgency_badge_nv",
             "group_icgrde",
             "divider_VJhene",
             "variant_picker_R3rGDr",
             "buy_buttons_eYQEYi",
+            "product_inventory_nv",
+            "whatsapp_order_nv",
             "text_aEtTtq"
           ]
         }
@@ -271,7 +300,7 @@
           "type": "text",
           "name": "t:names.header",
           "settings": {
-            "text": "<h3>You may also like </h3>",
+            "text": "<h3>También te puede interesar</h3>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
