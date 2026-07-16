@@ -86,11 +86,6 @@
         "disabled": false,
         "settings": {}
       },
-      "16570311801150519682": {
-        "type": "shopify://apps/ezy-whatsapp-chat-button/blocks/chat/b22d02e2-689c-4b1f-8c05-14826636fba4",
-        "disabled": false,
-        "settings": {}
-      },
       "14060646107696862457": {
         "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
         "disabled": false,
@@ -102,6 +97,11 @@
         "settings": {
           "widget_type": "review-widget"
         }
+      },
+      "16570311801150519682": {
+        "type": "shopify://apps/ezy-whatsapp-chat-button/blocks/chat/b22d02e2-689c-4b1f-8c05-14826636fba4",
+        "disabled": true,
+        "settings": {}
       }
     },
     "color_schemes": {
